@@ -1,10 +1,11 @@
 import React from 'react'
 import Button from '../../components/global/button/Button'
-import './login.scss'
-import colors from '../../components/global/styles/variables.module.scss'
+import './sign-in-sign-up.scss'
+import colors from '../../components/global/style/variables.module.scss'
 import { Link } from 'react-router-dom'
 
-export default function Login() {
+
+export default function SignIn() {
   return (
     <div className='login'>
       <h1 className='login-title'>Welcome to Scholla</h1>
