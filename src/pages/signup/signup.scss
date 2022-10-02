@@ -17,13 +17,13 @@
   &-title {
     font-size: 2rem;
     font-weight: 800;
-    margin-top: 6rem;
+    margin-top: 6.2rem;
   }
 
   &-input{
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    // gap: 0.5rem;
 
     &-field{
       border-style: none;
@@ -32,29 +32,75 @@
       font-size: 1.25rem;
       background: rgba(255, 255, 255, 0.9);
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      width: 70vw;
-
-      &::placeholder {
-        font-weight: 700;
-        opacity: 1;
-        color: $black;
-        text-align: center;
-      }
-      
-      &:focus {
-        outline-color: $darkblue;
-      }
+      font-weight: 700;
+      color: $black;
     }
+
     &-container{
       position: relative;
+      width: 100%;
   
       &-icon{
+        margin-top: 0.4rem;
+        margin-right: 0.5rem;
+        padding: 0.75rem 0;
         position: absolute;
         right: 0;
       }
     }
   }
 
+
+  &-dropdown{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: $black;
+    font-weight: 700;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    width: 100%;
+  
+
+    &-divider {
+      width: 70%;
+      border: 0.7px solid $black;
+    }
+
+
+    &-role{
+      &-selected{
+        text-align: center;
+        padding: 0.75rem 0;
+      }
+
+      &-expanded{
+        padding: 0.75rem 0;
+        padding-left: 1rem;
+      }
+
+      &-list{
+        position: absolute;
+        margin-top: -1.3rem;
+        background-color: rgba(255, 255, 255, 1);
+        width: 100%;
+        // border-top: 1px solid $black;
+        border-bottom-right-radius: 1rem;
+        border-bottom-left-radius: 1rem;
+
+
+        &-option{
+          padding-left: 1rem;
+
+        }
+      }
+    }
+  }
+
+  .expanded {
+    text-align: left;
+    background-color: rgba(255, 255, 255, 1);
+    border-bottom-right-radius: 0%;
+    border-bottom-left-radius: 0%;
+  }
 
   &-button{
     width: 100%;
