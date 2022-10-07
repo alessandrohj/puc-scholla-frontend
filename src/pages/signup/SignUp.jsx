@@ -13,6 +13,12 @@ export default function SignUp() {
   const [schoolList, setSchoolList] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedRole, setSelectedRole] = useState("I am a...");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [email, setEmail] = useState("");
+  const [id, setId] = useState("");
+  const [isEverythingValid, setIsEverythingValid] = useState(false);
 
   const roles = ["Student", "Teacher", "Parent"];
 
@@ -43,11 +49,90 @@ export default function SignUp() {
     setHasSearched(true);
   };
 
+  const validate = (item) => {
+// TODO: add validation using regex
+    const maxLength = 70;
+    const minLength = 8;
+
+    switch (item) {
+      case "email":
+        if (email.length >= minLength && email.length <= maxLength) {
+          return true;
+        } else {
+          return false;
+        }
+      case "password":
+        if (password.length >= minLength && password.length <= maxLength) {
+          return true;
+        } else {
+          return false;
+        }
+      case "confirmPassword":
+        if (password === confirmPassword) {
+          setIsPasswordValid(true);
+          return true;
+        } else {
+          setIsPasswordValid(false);
+          return false;
+        }
+      case "schoolName":
+        const schoolExists = schoolList.find(
+          (school) => school.name === schoolName
+        );
+        if (schoolExists) {
+          return true;
+        } else {
+          return false;
+        }
+    }
+  };
+
+  useEffect(() => {
+    if (
+      validate("email") &&
+      validate("password") &&
+      validate("confirmPassword") &&
+      validate("schoolName") &&
+      selectedRole !== "I am a..."
+    ) {
+      setIsEverythingValid(true);
+    } else {
+      setIsEverythingValid(false);
+    }
+  }, [email, password, confirmPassword, schoolName, selectedRole]);
+
+  const createUser = () => {
+    const url = "http://localhost:3000/users";
+    const data = {
+      email: email,
+      password: password,
+      school: schoolName,
+      role: selectedRole,
+    };
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  const handleSignUp = () => {
+    if (isEverythingValid) {
+      // createUser();
+      console.log("submitted");
+    }
+  };
+
   useEffect(() => {
     searchValue !== schoolName ? setHasSearched(false) : setHasSearched(true);
 
     if (searchValue.length > 0 && !hasSearched) {
-      // setHasSearched(false)
       const timer = setTimeout(() => {
         getSchoolList();
       }, 500);
@@ -133,30 +218,48 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-        <div className="signup-additional-fields">
-        <input
-            className="signup-additional-fields-details"
+      {selectedRole !== "I am a..." && schoolName && (
+        <div
+          className="signup-additional-fields"
+          onClick={() => setIsExpanded(false)}
+        >
+          <input
+            className="signup-additional-fields-individual"
             placeholder="Student Number/ID"
             type="text"
+            value={id}
+            onChange={(ev) => setId(ev.target.value)}
+            required
           />
           <input
-            className="signup-additional-fields-details"
+            className="signup-additional-fields-individual"
             placeholder="Email"
             type="email"
+            value={email}
+            onChange={(ev) => setEmail(ev.target.value)}
+            required
           />
           <div className="signup-additional-fields-password">
-          <input
-            className="signup-additional-fields-password"
-            placeholder="Password"
-            type="text"
-          />
             <input
-            className="signup-additional-fields-password"
-            placeholder="Confirm Password"
-            type="text"
-          />
+              className="signup-additional-fields-individual"
+              placeholder="Password"
+              type="password"
+              value={password}
+              onChange={(ev) => setPassword(ev.target.value)}
+              required
+              onSubmit={(ev) => (ev.preventDefault(), console.log("submitted"))}
+            />
+            <input
+              className="signup-additional-fields-individual"
+              placeholder="Confirm Password"
+              type="password"
+              value={confirmPassword}
+              onChange={(ev) => setConfirmPassword(ev.target.value)}
+              required
+            />
           </div>
-          </div>
+        </div>
+      )}
       <div className="signup-buttons-container">
         <Link to={"/"} className="signup-button">
           <Button
@@ -166,14 +269,24 @@ export default function SignUp() {
             background={colors.red}
           />
         </Link>
-        <Link to={"/"} className="signup-button">
-          <Button
-            className="signup-buttons-individual"
-            title={"Sign Up"}
-            font={"white"}
-            background={colors.blue}
-          />
-        </Link>
+        {isEverythingValid === true ? (
+          <div className="signup-button">
+            <Button
+              className="signup-buttons"
+              title={"Sign Up"}
+              background={colors.blue}
+              handleCLick={handleSignUp}
+            />
+          </div>
+        ) : (
+          <div className="signup-button">
+            <Button
+              className="signup-buttons-individual-inactive"
+              title={"Sign Up"}
+              inactive
+            />
+          </div>
+        )}
       </div>
     </div>
   );
