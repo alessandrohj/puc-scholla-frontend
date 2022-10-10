@@ -124,7 +124,7 @@ export default function SignUp() {
 
   const handleSignUp = () => {
     if (isEverythingValid) {
-      // createUser();
+      createUser();
       console.log("submitted");
     }
   };
@@ -143,7 +143,7 @@ export default function SignUp() {
 
   return (
     <div className="signup" onClick={() => setIsSchoolDropdownOpen(false)}>
-      <h1 className="signup-title">Welcome to Scholla</h1>
+      <h1 className={selectedRole !== "I am a..." && schoolName ?"signup-title-expanded" : "signup-title"}>Welcome to Scholla</h1>
       <div className="signup-input">
         <div className="signup-input-list">
           <input

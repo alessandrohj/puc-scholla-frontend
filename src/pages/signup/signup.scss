@@ -18,7 +18,15 @@
     margin-top: auto;
     font-size: 2rem;
     font-weight: 800;
-    padding-top: 4rem;
+    padding-top: 1.15rem;
+
+
+    &-expanded{
+      margin-top: auto;
+      font-size: 2rem;
+      font-weight: 800;
+      padding-top: 5.85rem;
+    }
   }
 
   &-input{
