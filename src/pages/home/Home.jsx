@@ -1,6 +1,7 @@
 import React from 'react'
 import { useContext, useEffect } from 'react'
 import UserContext from '../../components/scripts/UserContext'
+import Navbar from '../../components/navbar/Navbar'
 
 export default function Home() {
     const {token, setUser, user, cookies, removeCookie} = useContext(UserContext)
@@ -45,8 +46,8 @@ export default function Home() {
                 </div>
         </div>
         </div>
-        <button onClick={() => removeCookie('scholla')}>Remove Cookie</button>
         </div>}
+        <Navbar />
     </div>
   ) 
 }

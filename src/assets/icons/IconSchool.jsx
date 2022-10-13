@@ -1,8 +1,9 @@
 import React from 'react'
 
-export default function IconSchool({ height = 50, width = 70, color = 'white' }) {
+export default function IconSchool({ height = 50, width = 65, color = 'white' }) {
     return (
-        <svg width={width} height={height} viewBox="0 0 70 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <span>
+        <svg width={width} height={height} viewBox="5.33 1.08 59.33 41.83" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_369_278)">
 <g filter="url(#filter1_d_369_278)">
 <path d="M64.1668 13.2499L35.0002 1.58325L5.8335 13.2499L35.0002 24.9166L64.1668 13.2499ZM64.1668 13.2499V30.7499" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" shapeRendering="crispEdges"/>
@@ -30,5 +31,6 @@ export default function IconSchool({ height = 50, width = 70, color = 'white' })
 </filter>
 </defs>
         </svg>
+        </span>
     )
 }

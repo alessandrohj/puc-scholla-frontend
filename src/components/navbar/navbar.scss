@@ -2,9 +2,18 @@
 
 .navbar {
     background-color: $darkblue;
+    height: 8vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
     
     
     &-items{
+        margin-bottom: .2rem;
         display: flex;
         justify-content: space-around;
         align-items: flex-end;
