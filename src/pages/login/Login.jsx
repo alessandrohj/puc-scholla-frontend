@@ -35,7 +35,7 @@ export default function Login() {
         if (data.errors) {
           setErrorMessage(data.errors[0].message)
         } else {
-          setCookie('scholla', data.data.token, {path: '/token'})
+          setCookie('scholla', data.data.token, {path: '/'})
           setErrorMessage(null)
           return  navigate('/home')
         }

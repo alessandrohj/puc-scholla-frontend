@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { useState } from 'react';
 import {useCookies} from 'react-cookie'
 import Login from './pages/login/Login'
@@ -17,9 +17,9 @@ function App() {
     <UserContext.Provider value={globalData}>
     <div className="App">
       <Routes>
-        <Route exact path='/' element={<Login />} />
+        <Route exact path='/' element={!cookies.scholla ? <Login /> : <Navigate to='/home' />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/home' element={<Protected isLoggedIn={cookies} component={<Home />} />} />
+        <Route path='/home' element={<Protected isLoggedIn={cookies.scholla} component={<Home />} />} />
       </Routes>
     </div>
   </UserContext.Provider>

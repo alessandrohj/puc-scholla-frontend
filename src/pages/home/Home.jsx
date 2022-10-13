@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react'
 import UserContext from '../../components/scripts/UserContext'
 
 export default function Home() {
-    const {token, setUser, user, cookies} = useContext(UserContext)
+    const {token, setUser, user, cookies, removeCookie} = useContext(UserContext)
 
     const getUserData = () => {
         const url = "http://localhost:3000/auth/users/me";
@@ -11,18 +11,20 @@ export default function Home() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${cookies.token}`
+                'Authorization': `Bearer ${cookies.scholla}`
             }})
             .then((res) => res.json())
             .then(({data}) => {
                setUser(data)
                console.log(data)
             })
+            .catch((err) => console.log(err))
     }
 
 
     useEffect(() => {
         getUserData()
+        console.log(cookies)
         }, [])
 
      return (
@@ -43,6 +45,7 @@ export default function Home() {
                 </div>
         </div>
         </div>
+        <button onClick={() => removeCookie('scholla')}>Remove Cookie</button>
         </div>}
     </div>
   ) 
