@@ -3,7 +3,7 @@ import Button from '../../components/global/button/Button'
 import Error from '../../components/global/error/Error'
 import './login.scss'
 import colors from '../../components/global/styles/variables.module.scss'
-import { Link } from 'react-router-dom'
+import { Link, redirect, useNavigate } from 'react-router-dom'
 import UserContext from '../../components/scripts/UserContext.js'
 
 export default function Login() {
@@ -13,10 +13,10 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
+  const navigate = useNavigate()
 
   const signIn = () => {
    if (email.length === 0 && password.length === 0) {
-      console.log('sign in')
       return
     } 
     const url = "http://localhost:3000/auth/tokens";
@@ -37,7 +37,8 @@ export default function Login() {
         } else {
           setToken(data.data.token)
           setErrorMessage(null)
-          console.log(token)
+          console.log('token', data.data.token)
+          return  navigate('/home')
         }
       })
   }
