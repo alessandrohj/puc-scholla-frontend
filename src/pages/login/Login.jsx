@@ -3,12 +3,12 @@ import Button from '../../components/global/button/Button'
 import Error from '../../components/global/error/Error'
 import './login.scss'
 import colors from '../../components/global/styles/variables.module.scss'
-import { Link, redirect, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../../components/scripts/UserContext.js'
 
 export default function Login() {
 
-  const {token, setToken} = useContext(UserContext)
+  const {setCookie} = useContext(UserContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -35,14 +35,12 @@ export default function Login() {
         if (data.errors) {
           setErrorMessage(data.errors[0].message)
         } else {
-          setToken(data.data.token)
+          setCookie('scholla', data.data.token, {path: '/token'})
           setErrorMessage(null)
-          console.log('token', data.data.token)
           return  navigate('/home')
         }
       })
   }
-
 
   return (
     <div className='login'>

@@ -1,10 +1,9 @@
 import React from 'react'
 import { useContext, useEffect } from 'react'
-import { Navigate } from 'react-router-dom'
 import UserContext from '../../components/scripts/UserContext'
 
 export default function Home() {
-    const {token, setUser, user} = useContext(UserContext)
+    const {token, setUser, user, cookies} = useContext(UserContext)
 
     const getUserData = () => {
         const url = "http://localhost:3000/auth/users/me";
@@ -12,7 +11,7 @@ export default function Home() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${cookies.token}`
             }})
             .then((res) => res.json())
             .then(({data}) => {
@@ -20,6 +19,7 @@ export default function Home() {
                console.log(data)
             })
     }
+
 
     useEffect(() => {
         getUserData()
