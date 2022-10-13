@@ -15,10 +15,10 @@ export default function SignUp() {
   const [selectedRole, setSelectedRole] = useState("I am a...");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [email, setEmail] = useState("");
   const [id, setId] = useState("");
   const [isEverythingValid, setIsEverythingValid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const roles = ["Student", "Teacher", "Parent"];
 
@@ -69,10 +69,8 @@ export default function SignUp() {
         }
       case "confirmPassword":
         if (password === confirmPassword) {
-          setIsPasswordValid(true);
           return true;
         } else {
-          setIsPasswordValid(false);
           return false;
         }
       case "schoolName":
@@ -102,7 +100,7 @@ export default function SignUp() {
   }, [email, password, confirmPassword, schoolName, selectedRole]);
 
   const createUser = () => {
-    const url = "http://localhost:3000/users";
+    const url = "http://localhost:3000/auth/users";
     const data = {
       email: email,
       password: password,
@@ -119,6 +117,10 @@ export default function SignUp() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(err);
       });
   };
 
@@ -126,6 +128,8 @@ export default function SignUp() {
     if (isEverythingValid) {
       createUser();
       console.log("submitted");
+    } else {
+      setErrorMessage("Please fill out all fields correctly");
     }
   };
 
@@ -230,6 +234,8 @@ export default function SignUp() {
             value={id}
             onChange={(ev) => setId(ev.target.value)}
             required
+            onInvalid={(ev) => ev.target.setCustomValidity("Please enter your student number or your employee ID")}
+            onInput={(ev) => ev.target.setCustomValidity("")}
           />
           <input
             className="signup-additional-fields-individual"
@@ -238,6 +244,7 @@ export default function SignUp() {
             value={email}
             onChange={(ev) => setEmail(ev.target.value)}
             required
+            onInvalid={(ev) => ev.target.setCustomValidity("Invalid email")}
           />
           <div className="signup-additional-fields-password">
             <input
@@ -248,6 +255,8 @@ export default function SignUp() {
               onChange={(ev) => setPassword(ev.target.value)}
               required
               onSubmit={(ev) => (ev.preventDefault(), console.log("submitted"))}
+              onInvalid={(ev) => ev.target.setCustomValidity("Password must be at least 8 characters long and contain at least one number and one letter.")}
+              onInput={(ev) => ev.target.setCustomValidity("")}
             />
             <input
               className="signup-additional-fields-individual"
@@ -256,10 +265,13 @@ export default function SignUp() {
               value={confirmPassword}
               onChange={(ev) => setConfirmPassword(ev.target.value)}
               required
+              onInvalid={(ev) => ev.target.setCustomValidity("Passwords must match.")}
+              onInput={(ev) => ev.target.setCustomValidity("")}
             />
           </div>
         </div>
       )}
+     {!isEverythingValid && errorMessage && <Error message={errorMessage} />}
       <div className="signup-buttons-container">
         <Link to={"/"} className="signup-button">
           <Button
