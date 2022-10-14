@@ -12,7 +12,7 @@ export default function Navbar() {
           <Link className='navbar-items-link'>
         <IconHome />
         </Link>
-        <Link className='navbar-items-link school'>
+        <Link to='/classes' className='navbar-items-link school'>
         <IconSchool />
         </Link>
         <Link  className='navbar-items-link'>

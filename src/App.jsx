@@ -7,6 +7,7 @@ import UserContext from './components/scripts/UserContext'
 import './App.scss'
 import Home from './pages/home/Home';
 import Protected from './components/protected/Protected';
+import Classes from './pages/classes/Classes';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -20,6 +21,7 @@ function App() {
         <Route exact path='/' element={!cookies.scholla ? <Login /> : <Navigate to='/home' />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/home' element={<Protected isLoggedIn={cookies.scholla} component={<Home />} />} />
+        <Route path='/classes' element={<Protected isLoggedIn={cookies.scholla} component={<Classes />} />} />
       </Routes>
     </div>
   </UserContext.Provider>
