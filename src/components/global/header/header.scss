@@ -1,13 +1,12 @@
 .header{
-    // display: grid;
-    // flex-wrap:  nowrap;
     display: flex;
-    // grid-template-columns: 2.5fr 1fr;
+    justify-content: center;
 
     &-title{
         padding-top: 2rem;
         margin: 1rem;
         font-size: 1.725rem;
+        margin-left: auto;
     }
 
 
@@ -17,6 +16,8 @@
 
         &-container{
             flex: 1;
+            max-width: 32vw;
+            margin-left: auto;
         }
     }
 }

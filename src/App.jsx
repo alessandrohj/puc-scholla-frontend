@@ -8,6 +8,9 @@ import './App.scss'
 import Home from './pages/home/Home';
 import Protected from './components/protected/Protected';
 import Classes from './pages/classes/Classes';
+import NotFound from './pages/404';
+import Assignments from './pages/assignments/Assignments';
+import Profile from './pages/profile/Profile';
 
 function App() {
   const [user, setUser] = useState(null)
@@ -22,6 +25,9 @@ function App() {
         <Route path='/signup' element={<SignUp />} />
         <Route path='/home' element={<Protected isLoggedIn={cookies.scholla} component={<Home />} />} />
         <Route path='/classes' element={<Protected isLoggedIn={cookies.scholla} component={<Classes />} />} />
+        <Route path='/assignment' element={<Protected isLoggedIn={cookies.scholla} component={<Assignments />} />} />
+        <Route path='/profile' element={<Protected isLoggedIn={cookies.scholla} component={<Profile />} />} />
+        <Route path='*' element={NotFound} />
       </Routes>
     </div>
   </UserContext.Provider>
