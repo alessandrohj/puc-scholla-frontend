@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { IconHome, IconSchool,IconProfile, IconTasks } from '../../assets'
 import './navbar.scss'
 
 export default function Navbar() {
 
-  const [active, setActive] = useState(false)
 
   return (
     <div className='navbar'>
