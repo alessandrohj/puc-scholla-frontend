@@ -2,6 +2,8 @@ import React from 'react'
 import { useContext, useEffect } from 'react'
 import UserContext from '../../components/scripts/UserContext'
 import Navbar from '../../components/navbar/Navbar'
+import Header from '../../components/global/header/Header'
+import { Navigate } from 'react-router-dom'
 
 export default function Home() {
     const {token, setUser, user, cookies, removeCookie} = useContext(UserContext)
@@ -19,7 +21,11 @@ export default function Home() {
                setUser(data)
                console.log(data)
             })
-            .catch((err) => console.log(err))
+            .catch((err) => {
+                console.log(err)
+                removeCookie('scholla')
+                Navigate('/')
+            })
     }
 
 
@@ -30,23 +36,8 @@ export default function Home() {
 
      return (
     <div className='home'>
-        {user &&  <div>
-        <div className='home-header'>
-        <h1>Welcome {user.firstName}</h1>
-        <p>icon</p>
-        </div>
-        <div className='home-content'>
-        <div className='home-content-classes'>
-            <h2>Classes</h2>
-            <div className='home-content-classes-list'>
-            <div className='home-content-classes-list-item'>
-                <p>Class 1</p>
-                <p>icon</p>
-                </div>
-                </div>
-        </div>
-        </div>
-        </div>}
+   {user && <Header title={`Welcome, ${user.firstName}`} section='welcome' />}
+   <button onClick={()=>removeCookie('scholla')}>Logout</button>
         <Navbar />
     </div>
   ) 
