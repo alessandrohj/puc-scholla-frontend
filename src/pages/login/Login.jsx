@@ -19,7 +19,7 @@ export default function Login() {
    if (email.length === 0 && password.length === 0) {
       return
     } 
-    const url = "https://scholla.onrender.com/auth/tokens";
+    const url = "https://puc-scholla-backend-production.up.railway.app/auth/tokens";
     fetch(url, {
       method: 'POST',
       headers: {

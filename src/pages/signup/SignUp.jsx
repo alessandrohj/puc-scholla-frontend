@@ -31,8 +31,10 @@ export default function SignUp() {
     transition: "transform 0.5s ease-in-out",
   };
 
+  const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
+
   const getSchoolList = () => {
-    const url = "https://scholla.onrender.com/schools/" + searchValue;
+    const url = BASE_URL + "/schools/" + searchValue;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -98,7 +100,7 @@ export default function SignUp() {
   }, [email, password, confirmPassword, schoolName, selectedRole]);
 
   const createUser = () => {
-    const url = "http://localhost:3000/auth/users";
+    const url = BASE_URL + "/auth/users";
     const data = {
       email: email,
       password: password,

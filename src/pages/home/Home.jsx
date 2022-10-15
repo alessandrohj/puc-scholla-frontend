@@ -9,7 +9,7 @@ export default function Home() {
     const {token, setUser, user, cookies, removeCookie} = useContext(UserContext)
 
     const getUserData = () => {
-        const url = "http://localhost:3000/auth/users/me";
+        const url = "https://puc-scholla-backend-production.up.railway.app/auth/users/me";
         fetch(url, {
             method: 'GET',
             headers: {
