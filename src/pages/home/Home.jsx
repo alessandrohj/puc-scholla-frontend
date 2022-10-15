@@ -31,13 +31,11 @@ export default function Home() {
 
     useEffect(() => {
         getUserData()
-        console.log(cookies)
         }, [])
 
      return (
     <div className='home'>
    {user && <Header title={`Welcome, ${user.firstName}`} section='welcome' />}
-   <button onClick={()=>removeCookie('scholla')}>Logout</button>
         <Navbar />
     </div>
   ) 

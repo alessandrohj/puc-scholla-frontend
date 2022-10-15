@@ -47,7 +47,7 @@ export default function Login() {
       <div className='login-content'>
         <div className='login-content-input'>
          {errorMessage && <Error message={errorMessage} />}
-          <input className='login-content-input-field' placeholder='Email' type='text' value={email} onChange={(ev) => setEmail(ev.target.value)}/>
+          <input className='login-content-input-field' placeholder='Email' type='text' value={email} onChange={(ev) => setEmail(ev.target.value)} />
           <input className='login-content-input-field'  placeholder='Password' type='password' value={password} onChange={(ev)=> setPassword(ev.target.value)}/>
           <p className='login-content-input-highlight'>Forgot your password?</p>
         </div>
