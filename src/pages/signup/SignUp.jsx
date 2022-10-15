@@ -32,8 +32,7 @@ export default function SignUp() {
   };
 
   const getSchoolList = () => {
-    const url = "http://localhost:3000/schools/" + searchValue;
-    // TODO: replace to deployment URL
+    const url = "https://scholla.onrender.com/schools/" + searchValue;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -50,7 +49,6 @@ export default function SignUp() {
   };
 
   const validate = (item) => {
-// TODO: add validation using regex
     const maxLength = 70;
     const minLength = 8;
 

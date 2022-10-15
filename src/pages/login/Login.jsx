@@ -19,8 +19,7 @@ export default function Login() {
    if (email.length === 0 && password.length === 0) {
       return
     } 
-    const url = "http://localhost:3000/auth/tokens";
-    // TODO: replace to deployment URL
+    const url = "https://scholla.onrender.com/auth/tokens";
     fetch(url, {
       method: 'POST',
       headers: {
