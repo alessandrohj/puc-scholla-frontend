@@ -4,9 +4,10 @@ import UserContext from '../../components/scripts/UserContext'
 import Navbar from '../../components/navbar/Navbar'
 import Header from '../../components/global/header/Header'
 import { Navigate } from 'react-router-dom'
+import './home.scss'
 
 export default function Home() {
-    const {token, setUser, user, cookies, removeCookie} = useContext(UserContext)
+    const {setUser, user, cookies, removeCookie} = useContext(UserContext)
 
     const getUserData = () => {
         const url = "https://puc-scholla-backend-production.up.railway.app/auth/users/me";
