@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IconExpand from "../../assets/icons/IconExpand";
 import Button from "../../components/global/button/Button";
 import "./signup.scss";
@@ -19,7 +19,8 @@ export default function SignUp() {
   const [id, setId] = useState("");
   const [isEverythingValid, setIsEverythingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [schoolId, setSchoolId] = useState(null);
+  const [schoolIdentifier, setSchoolIdentifier] = useState(null);
+  const navigate = useNavigate();
 
   const roles = ["Student", "Teacher", "Parent"];
 
@@ -32,7 +33,8 @@ export default function SignUp() {
     transition: "transform 0.5s ease-in-out",
   };
 
-  const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
+  // const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
+  const BASE_URL = "http://localhost:3000";
 
   const getSchoolList = () => {
     const url = BASE_URL + "/schools/" + searchValue;
@@ -44,9 +46,9 @@ export default function SignUp() {
       });
   };
 
-  const chooseSchool = ({name, _id}) => {
+  const chooseSchool = ({ name, _id }) => {
     setSchoolName(name);
-    setSchoolId(_id);
+    setSchoolIdentifier(_id);
     setIsSchoolDropdownOpen(false);
     setSearchValue(name);
     setHasSearched(true);
@@ -99,15 +101,16 @@ export default function SignUp() {
     } else {
       setIsEverythingValid(false);
     }
-  }, [email, password, confirmPassword, schoolName, selectedRole, schoolId]);
+  }, [email, password, confirmPassword, schoolName, selectedRole]);
 
   const createUser = () => {
     const url = BASE_URL + "/auth/users";
     const data = {
       email: email,
       password: password,
-      school: schoolId,
-      role: selectedRole,
+      school: schoolIdentifier,
+      schoolId: id,
+      role: selectedRole.toLowerCase(),
     };
     fetch(url, {
       method: "POST",
@@ -118,8 +121,11 @@ export default function SignUp() {
     })
       .then((res) => res.json())
       .then((data) => {
-        Navigate("/");
-        // TODO: Navigate to Home screen by logging in
+        if (data.message === "New user created") {
+          return navigate("/");
+        } else {
+          setErrorMessage(data.message);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -150,7 +156,15 @@ export default function SignUp() {
 
   return (
     <div className="signup" onClick={() => setIsSchoolDropdownOpen(false)}>
-      <h1 className={selectedRole !== "I am a..." && schoolName ?"signup-title-expanded" : "signup-title"}>Welcome to Scholla</h1>
+      <h1
+        className={
+          selectedRole !== "I am a..." && schoolName
+            ? "signup-title-expanded"
+            : "signup-title"
+        }
+      >
+        Welcome to Scholla
+      </h1>
       <div className="signup-input">
         <div className="signup-input-list">
           <input
@@ -237,7 +251,11 @@ export default function SignUp() {
             value={id}
             onChange={(ev) => setId(ev.target.value)}
             required
-            onInvalid={(ev) => ev.target.setCustomValidity("Please enter your student number or your employee ID")}
+            onInvalid={(ev) =>
+              ev.target.setCustomValidity(
+                "Please enter your student number or your employee ID"
+              )
+            }
             onInput={(ev) => ev.target.setCustomValidity("")}
           />
           <input
@@ -258,7 +276,11 @@ export default function SignUp() {
               onChange={(ev) => setPassword(ev.target.value)}
               required
               onSubmit={(ev) => (ev.preventDefault(), console.log("submitted"))}
-              onInvalid={(ev) => ev.target.setCustomValidity("Password must be at least 8 characters long and contain at least one number and one letter.")}
+              onInvalid={(ev) =>
+                ev.target.setCustomValidity(
+                  "Password must be at least 8 characters long and contain at least one number and one letter."
+                )
+              }
               onInput={(ev) => ev.target.setCustomValidity("")}
             />
             <input
@@ -268,13 +290,15 @@ export default function SignUp() {
               value={confirmPassword}
               onChange={(ev) => setConfirmPassword(ev.target.value)}
               required
-              onInvalid={(ev) => ev.target.setCustomValidity("Passwords must match.")}
+              onInvalid={(ev) =>
+                ev.target.setCustomValidity("Passwords must match.")
+              }
               onInput={(ev) => ev.target.setCustomValidity("")}
             />
           </div>
         </div>
       )}
-     {!isEverythingValid && errorMessage && <Error message={errorMessage} />}
+      {!isEverythingValid && errorMessage && <Error message={errorMessage} />}
       <div className="signup-buttons-container">
         <Link to={"/"} className="signup-button">
           <Button
