@@ -33,8 +33,7 @@ export default function SignUp() {
     transition: "transform 0.5s ease-in-out",
   };
 
-  // const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
 
   const getSchoolList = () => {
     const url = BASE_URL + "/schools/" + searchValue;
