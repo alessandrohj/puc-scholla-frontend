@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import IconExpand from "../../assets/icons/IconExpand";
 import Button from "../../components/global/button/Button";
 import "./signup.scss";
@@ -19,6 +19,7 @@ export default function SignUp() {
   const [id, setId] = useState("");
   const [isEverythingValid, setIsEverythingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [schoolId, setSchoolId] = useState(null);
 
   const roles = ["Student", "Teacher", "Parent"];
 
@@ -43,8 +44,9 @@ export default function SignUp() {
       });
   };
 
-  const chooseSchool = (name) => {
+  const chooseSchool = ({name, _id}) => {
     setSchoolName(name);
+    setSchoolId(_id);
     setIsSchoolDropdownOpen(false);
     setSearchValue(name);
     setHasSearched(true);
@@ -97,14 +99,14 @@ export default function SignUp() {
     } else {
       setIsEverythingValid(false);
     }
-  }, [email, password, confirmPassword, schoolName, selectedRole]);
+  }, [email, password, confirmPassword, schoolName, selectedRole, schoolId]);
 
   const createUser = () => {
     const url = BASE_URL + "/auth/users";
     const data = {
       email: email,
       password: password,
-      school: schoolName,
+      school: schoolId,
       role: selectedRole,
     };
     fetch(url, {
@@ -116,7 +118,8 @@ export default function SignUp() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        Navigate("/");
+        // TODO: Navigate to Home screen by logging in
       })
       .catch((err) => {
         console.log(err);
@@ -170,7 +173,7 @@ export default function SignUp() {
                   <p
                     className="signup-school-dropdown-option"
                     key={index}
-                    onClick={() => chooseSchool(school.name)}
+                    onClick={() => chooseSchool(school)}
                   >
                     {school.name}
                   </p>
