@@ -1,0 +1,53 @@
+@import '../../components/global/styles/colors.scss';
+
+.users{
+
+    &-container{
+        display: flex;
+        flex-direction: column;
+        padding-left: 1rem;
+
+        &-add{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid $black;
+            border-top: 1px solid $black;
+            margin-top: 1rem;
+
+            &-form{
+                max-width: 360px;
+
+                &-inputs{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+
+                    input{
+                        margin: .5rem 0;
+                    }
+
+                    &__email{
+                        width: 100%;
+                    }
+
+                }
+            }
+
+            button{
+                background-color: $aqua;
+                border-radius: 0.5rem;
+                padding: 0.5rem 1rem;
+                border: none;
+                color: #fff;
+                font-weight: bold;
+                font-size: 1rem;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
