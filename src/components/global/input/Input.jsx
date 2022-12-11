@@ -11,9 +11,11 @@ export default function Input({
   label,
   required,
   className,
+  style,
+  containerStyle,
 }) {
   return (
-    <div className="input">
+    <div className="input" style={containerStyle}>
       <label htmlFor={id}>{label}</label>
       <input
         type={type}
@@ -24,6 +26,7 @@ export default function Input({
         name={name}
         required={required}
         className={`input-field ` + className}
+        style={style}
       />
     </div>
   );

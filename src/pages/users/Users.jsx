@@ -31,6 +31,8 @@ export default function Users() {
                 type="email"
                 placeholder="Email"
                 className={"users-container-add-form-inputs__email"}
+                containerStyle={{ width: "100%" }}
+                style={{ width: "100%" }}
               />
               <Input
                 type="password"
@@ -67,7 +69,7 @@ export default function Users() {
         <div className="users-container-find">
           <h3>Find User</h3>
           <div className="users-container-header-inputs">
-            <input type="text" placeholder="Enter name or email" />
+            <Input type="text" placeholder="Enter a name or email" />
             <button>Find User</button>
           </div>
         </div>
