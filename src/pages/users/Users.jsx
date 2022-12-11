@@ -8,7 +8,7 @@ import UserContext from "../../components/scripts/UserContext";
 import "./users.scss";
 
 export default function Users() {
-  const { role } = useContext(UserContext);
+  const { cookies } = useContext(UserContext);
   const [schools, setSchools] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -19,17 +19,45 @@ export default function Users() {
   const [newUserSchool, setNewUserSchool] = useState("");
   const [isValid, setIsValid] = useState(false);
 
+  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
   const getSchoolList = () => {
-    const BASE_URL = "http://localhost:3000"; //TODO: change to production url
     fetch(`${BASE_URL}/schools/list`)
       .then((res) => {
         if (res.ok) return res.json();
       })
       .then(({ data }) => {
         const schoolList = data.map((school) => {
-          return { value: school.id, label: school.name };
+          return { value: school._id, label: school.name };
         });
         setSchools(schoolList);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const createAccount = () => {
+    const newUser = {
+      firstName,
+      lastName,
+      email,
+      password,
+      role: newUserRole.label,
+      school: newUserSchool,
+    };
+
+    const url = BASE_URL + "/admin/users";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then((data) => {
+        console.log(data);
       })
       .catch((err) => console.log(err));
   };
@@ -63,7 +91,7 @@ export default function Users() {
         }
         break;
       case "newUserRole":
-        setNewUserRole(value);
+        setNewUserRole({ value: value, label: value });
         break;
       case "newUserSchool":
         setNewUserSchool(value);
@@ -108,6 +136,7 @@ export default function Users() {
   ]);
 
   function handleSubmit() {
+    createAccount();
     console.log("submitted");
   }
 
