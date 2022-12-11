@@ -7,7 +7,6 @@ export default function Classes() {
   return (
     <div className='classes'>
         <Header title='Your Classes' section='classes' />
-        <Navbar />
         </div>
   )
 }

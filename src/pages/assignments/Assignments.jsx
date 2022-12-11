@@ -6,7 +6,6 @@ export default function Assignments() {
     return (
         <div className='assignments'>
             <Header title='Assignments' section='assignment' />
-            <Navbar />
             </div>
       )
 }

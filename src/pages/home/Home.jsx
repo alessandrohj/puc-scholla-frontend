@@ -43,7 +43,6 @@ export default function Home() {
      return (
     <div className='home'>
    {user && <Header title={`Welcome, ${user.firstName}`} section='welcome' />}
-        <Navbar role={role} />
     </div>
   )
 }
