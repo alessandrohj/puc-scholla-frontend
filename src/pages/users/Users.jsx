@@ -14,7 +14,7 @@ export default function Users() {
       <Header title="Manage Users" section="newAssignment" />
       <div className="users-container">
         <div className="users-container-add">
-          <h3>Add User</h3>
+          <h3>Add New User</h3>
           <div className="users-container-add-form">
             <div className="users-container-add-form-inputs">
               <Input
@@ -64,13 +64,6 @@ export default function Users() {
               </div>
             </div>
             <button>Add User</button>
-          </div>
-        </div>
-        <div className="users-container-find">
-          <h3>Find User</h3>
-          <div className="users-container-header-inputs">
-            <Input type="text" placeholder="Enter a name or email" />
-            <button>Find User</button>
           </div>
         </div>
       </div>
