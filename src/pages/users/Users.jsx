@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Header from "../../components/global/header/Header";
+import Input from "../../components/global/input/Input";
 import UserContext from "../../components/scripts/UserContext";
 import "./users.scss";
 
@@ -15,30 +16,30 @@ export default function Users() {
           <h3>Add User</h3>
           <div className="users-container-add-form">
             <div className="users-container-add-form-inputs">
-              <input
+              <Input
                 type="text"
                 placeholder="First Name"
-                className="users-container-add-form-inputs__first-name"
+                className={"users-container-add-form-inputs__first-name"}
               />
-              <input
+              <Input
                 type="text"
                 placeholder="Last Name"
-                className="users-container-add-form-inputs__last-name"
+                className={"users-container-add-form-inputs__last-name"}
               />
-              <input
-                type="text"
+              <Input
+                type="email"
                 placeholder="Email"
-                className="users-container-add-form-inputs__email"
+                className={"users-container-add-form-inputs__email"}
               />
-              <input
-                type="text"
+              <Input
+                type="password"
                 placeholder="Password"
-                className="users-container-add-form-inputs__password"
+                className={"users-container-add-form-inputs__password"}
               />
-              <input
-                type="text"
+              <Input
+                type="password"
                 placeholder="Confirm Password"
-                className="users-container-add-form-inputs__confirm-pass"
+                className={"users-container-add-form-inputs__confirm-password"}
               />
               <div className="users-container-add-form-inputs__role">
                 <label htmlFor="role">Role</label>
