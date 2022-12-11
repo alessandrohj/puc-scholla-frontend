@@ -18,6 +18,8 @@ export default function Users() {
   const [newUserRole, setNewUserRole] = useState("");
   const [newUserSchool, setNewUserSchool] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [accountCreated, setAccountCreated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const BASE_URL = "http://localhost:3000"; //TODO: change to production url
   const getSchoolList = () => {
@@ -58,6 +60,15 @@ export default function Users() {
       })
       .then((data) => {
         console.log(data);
+        setAccountCreated(true);
+        setIsLoading(false);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setNewUserRole("");
+        setNewUserSchool("");
       })
       .catch((err) => console.log(err));
   };
@@ -144,83 +155,92 @@ export default function Users() {
     <div className="users">
       <Header title="Manage Users" section="newAssignment" />
       <div className="users-container">
-        <div className="users-container-add">
-          <h3>Add New User</h3>
-          <div className="users-container-add-form">
-            <div className="users-container-add-form-inputs">
-              <Input
-                type="text"
-                placeholder="First Name"
-                id={"firstName"}
-                name={"firstName"}
-                className={"users-container-add-form-inputs__first-name"}
-                onChange={handleChange}
-              />
-              <Input
-                type="text"
-                id={"lastName"}
-                name={"lastName"}
-                placeholder="Last Name"
-                className={"users-container-add-form-inputs__last-name"}
-                onChange={handleChange}
-              />
-              <Input
-                type="email"
-                id={"email"}
-                name={"email"}
-                placeholder="Email"
-                className={"users-container-add-form-inputs__email"}
-                containerStyle={{ width: "100%" }}
-                style={{ width: "100%" }}
-                onChange={handleChange}
-              />
-              <Input
-                type="password"
-                id={"password"}
-                name={"password"}
-                placeholder="Password"
-                className={"users-container-add-form-inputs__password"}
-                onChange={handleChange}
-              />
-              <Input
-                type="password"
-                id={"confirmPassword"}
-                name={"confirmPassword"}
-                placeholder="Confirm Password"
-                onChange={handleChange}
-                className={"users-container-add-form-inputs__confirm-password"}
-              />
-              <div className="users-container-add-form-inputs__dropdowns">
-                <div className="users-container-add-form-inputs__role">
-                  <Dropdown
-                    options={[
-                      { value: "admin", label: "Admin" },
-                      { value: "dean", label: "Dean" },
-                    ]}
-                    label="Role"
-                    name="newUserRole"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="users-container-add-form-inputs__school">
-                  <Dropdown
-                    options={schools}
-                    label="School"
-                    name="newUserSchool"
-                    noOption={"No schools"}
-                    onChange={handleChange}
-                  />
+        {!accountCreated ? (
+          <div className="users-container-add">
+            <h3>Add New User</h3>
+            <div className="users-container-add-form">
+              <div className="users-container-add-form-inputs">
+                <Input
+                  type="text"
+                  placeholder="First Name"
+                  id={"firstName"}
+                  name={"firstName"}
+                  className={"users-container-add-form-inputs__first-name"}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="text"
+                  id={"lastName"}
+                  name={"lastName"}
+                  placeholder="Last Name"
+                  className={"users-container-add-form-inputs__last-name"}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="email"
+                  id={"email"}
+                  name={"email"}
+                  placeholder="Email"
+                  className={"users-container-add-form-inputs__email"}
+                  containerStyle={{ width: "100%" }}
+                  style={{ width: "100%" }}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="password"
+                  id={"password"}
+                  name={"password"}
+                  placeholder="Password"
+                  className={"users-container-add-form-inputs__password"}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="password"
+                  id={"confirmPassword"}
+                  name={"confirmPassword"}
+                  placeholder="Confirm Password"
+                  onChange={handleChange}
+                  className={
+                    "users-container-add-form-inputs__confirm-password"
+                  }
+                />
+                <div className="users-container-add-form-inputs__dropdowns">
+                  <div className="users-container-add-form-inputs__role">
+                    <Dropdown
+                      options={[
+                        { value: "admin", label: "Admin" },
+                        { value: "dean", label: "Dean" },
+                      ]}
+                      label="Role"
+                      name="newUserRole"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="users-container-add-form-inputs__school">
+                    <Dropdown
+                      options={schools}
+                      label="School"
+                      name="newUserSchool"
+                      noOption={"No schools"}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
               </div>
+              <button
+                className={isValid ? "active" : "disabled"}
+                onClick={handleSubmit}
+              >
+                Add User
+              </button>
             </div>
-            <button
-              className={isValid ? "active" : "disabled"}
-              onClick={handleSubmit}
-            >
-              Add User
-            </button>
           </div>
-        </div>
+        ) : (
+          <div className="users-container-add">
+            <h3>Account Created</h3>
+            <button onClick={() => setAccountCreated(false)}>OK</button>
+          </div>
+        )}
       </div>
     </div>
   );
