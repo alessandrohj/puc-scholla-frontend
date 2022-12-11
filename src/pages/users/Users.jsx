@@ -20,6 +20,8 @@ export default function Users() {
   const [isValid, setIsValid] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const BASE_URL = "http://localhost:3000"; //TODO: change to production url
   const getSchoolList = () => {
@@ -151,6 +153,28 @@ export default function Users() {
     console.log("submitted");
   }
 
+  function findUser() {
+    if (searchQuery === "") {
+      return;
+    }
+    const url = BASE_URL + "/admin/users/" + searchQuery;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then(({ data }) => {
+        console.log(data);
+        setSearchResults(data);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="users">
       <Header title="Manage Users" section="newAssignment" />
@@ -233,6 +257,37 @@ export default function Users() {
               >
                 Add User
               </button>
+            </div>
+            <div className="users-container-add-form-inputs__search">
+              <h3>Find a User</h3>
+              <div className="users-container-add-form-inputs__search-field">
+                <Input
+                  type="text"
+                  placeholder="Search by name or email"
+                  onChange={(ev) => setSearchQuery(ev.target.value)}
+                />
+                <button onClick={findUser}>Search</button>
+              </div>
+              <div className="users-container-add-form-inputs__search-results">
+                <div className="users-container-add-form-inputs__search-results__user">
+                  {searchResults &&
+                    searchResults.map((user, index) => {
+                      return (
+                        <div
+                          className="users-container-add-form-inputs__search-results__user__info"
+                          key={index}
+                        >
+                          <p>{user.firstName + " " + user.lastName}</p>
+                          {user.school ? (
+                            <p>@ {user.school.name}</p>
+                          ) : (
+                            <p>- {user.role} (no school)</p>
+                          )}
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
             </div>
           </div>
         ) : (

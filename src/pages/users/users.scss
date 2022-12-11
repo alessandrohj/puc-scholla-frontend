@@ -1,6 +1,8 @@
 @import '../../components/global/styles/colors.scss';
 
 .users{
+    overflow: scroll;
+    height: 90%;
 
     &-container{
         display: flex;
@@ -46,6 +48,38 @@
                         align-items: flex-start;
                         width: 100%;
                         margin-bottom: 1rem;
+                    }
+
+                    &__search{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        width: 100%;
+                        margin: 1rem 0;
+                        width: 100%;
+
+                        h3 {
+                            margin-left: .5rem;
+                        }
+                        &-field{
+                            display: flex;
+                            gap: 1rem;
+                        }
+
+                        &-results{
+
+                            &__user{
+
+                                &__info{
+                                    display: flex;
+                                    justify-content: flex-start;
+                                    align-items: flex-start;
+                                    gap: .5rem;
+                                    margin-left: 1rem;
+                                }
+                            }
+                        }
                     }
 
                 }
