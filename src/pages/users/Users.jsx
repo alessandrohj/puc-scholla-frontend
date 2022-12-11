@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Header from "../../components/global/header/Header";
+import Dropdown from "../../components/global/input/Dropdown";
 import Input from "../../components/global/input/Input";
 import UserContext from "../../components/scripts/UserContext";
 import "./users.scss";
@@ -42,24 +43,22 @@ export default function Users() {
                 className={"users-container-add-form-inputs__confirm-password"}
               />
               <div className="users-container-add-form-inputs__role">
-                <label htmlFor="role">Role</label>
-                <select name="role" id="role">
-                  <option value="admin">Admin</option>
-                  <option value="teacher">Dean</option>
-                  <option value="student">Super</option>
-                </select>
+                <Dropdown
+                  options={[
+                    { value: "admin", label: "Admin" },
+                    { value: "dean", label: "Dean" },
+                  ]}
+                  label="Role"
+                  name="role"
+                />
               </div>
               <div className="users-container-add-form-inputs__school">
-                <label htmlFor="school">School</label>
-                <select name="school" id="school">
-                  {schools ? (
-                    schools.map((school) => {
-                      return <option value={school.id}>{school.name}</option>;
-                    })
-                  ) : (
-                    <option value="">No Schools</option>
-                  )}
-                </select>
+                <Dropdown
+                  options={schools}
+                  label="School"
+                  name="school"
+                  noOption={"No schools"}
+                />
               </div>
             </div>
             <button>Add User</button>
