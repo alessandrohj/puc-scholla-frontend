@@ -60,7 +60,11 @@ export default function SignUp() {
 
     switch (item) {
       case "email":
-        if (email.length >= minLength && email.length <= maxLength) {
+        if (
+          email.length >= minLength &&
+          email.length <= maxLength &&
+          !/\S+@\S+\.\S+/.test(email)
+        ) {
           return true;
         } else {
           return false;

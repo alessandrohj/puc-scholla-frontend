@@ -39,11 +39,19 @@
                         margin-top: 1rem;
                     }
 
+                    &__dropdowns{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        width: 100%;
+                        margin-bottom: 1rem;
+                    }
+
                 }
             }
 
             button{
-                background-color: $aqua;
                 border-radius: 0.5rem;
                 padding: 0.5rem 1rem;
                 border: none;
@@ -53,6 +61,14 @@
                 &:hover{
                     cursor: pointer;
                 }
+            }
+
+            .active{
+                background-color: $blue;
+            }
+            .disabled{
+                background-color: $aqua;
+                pointer-events: none;
             }
         }
     }

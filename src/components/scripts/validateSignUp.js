@@ -13,16 +13,14 @@ export default function validateField( type, item) {
             }
      case 'email':
         if (
-          emailRegex.test(item) &&
-          item.length >= 5 &&
-          item.length <= maxLength
+          emailRegex.test(item)
           ) {
             return true;
           } else {
             return false;
           }
           case "password":
-            if (password.length >= 5 && password.length <= maxLength) {
+            if (item.length >= 5 && item.length <= maxLength) {
               return true;
             } else {
               return false;

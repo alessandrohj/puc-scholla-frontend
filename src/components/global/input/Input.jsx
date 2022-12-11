@@ -22,7 +22,7 @@ export default function Input({
         id={id}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={(ev) => onChange(ev)}
         name={name}
         required={required}
         className={`input-field ` + className}
