@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../components/global/header/Header";
 import Dropdown from "../../components/global/input/Dropdown";
 import Input from "../../components/global/input/Input";
@@ -273,9 +274,10 @@ export default function Users() {
                   {searchResults &&
                     searchResults.map((user, index) => {
                       return (
-                        <div
+                        <Link
                           className="users-container-add-form-inputs__search-results__user__info"
                           key={index}
+                          to={`/users/${user.email}`}
                         >
                           <p>{user.firstName + " " + user.lastName}</p>
                           {user.school ? (
@@ -283,7 +285,7 @@ export default function Users() {
                           ) : (
                             <p>- {user.role} (no school)</p>
                           )}
-                        </div>
+                        </Link>
                       );
                     })}
                 </div>
