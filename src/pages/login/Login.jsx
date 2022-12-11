@@ -18,8 +18,9 @@ export default function Login() {
   const signIn = () => {
    if (email.length === 0 && password.length === 0) {
       return
-    } 
-    const url = "https://puc-scholla-backend-production.up.railway.app/auth/tokens";
+    }
+    // const url = "https://puc-scholla-backend-production.up.railway.app/auth/tokens";
+    const url = "http://localhost:3000/auth/tokens"; //TODO: change to production url
     fetch(url, {
       method: 'POST',
       headers: {

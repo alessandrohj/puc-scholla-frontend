@@ -14,8 +14,9 @@ import Profile from './pages/profile/Profile';
 
 function App() {
   const [user, setUser] = useState(null)
+  const [role, setRole] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(['scholla'])
-  const globalData = {user, setUser, cookies, setCookie, removeCookie}
+  const globalData = {user, setUser, role, setRole, cookies, setCookie, removeCookie}
 
   return (
     <UserContext.Provider value={globalData}>
