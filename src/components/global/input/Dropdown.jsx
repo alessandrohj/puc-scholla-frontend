@@ -12,8 +12,14 @@ export default function Dropdown({
   return (
     <div className="dropdown">
       <label htmlFor={name}>{label}</label>
-      <select name={name} id={name} onChange={onChange} value={value}>
-        {options ? (
+      <select
+        name={name}
+        id={name}
+        onChange={onChange}
+        value={value}
+        className={options.length === 0 ? "hide-arrow" : ""}
+      >
+        {options.length > 0 ? (
           options.map((option) => {
             return (
               <option value={option.value} key={option.value}>
