@@ -6,13 +6,13 @@ import { useContext } from 'react'
 import UserContext from '../../components/scripts/UserContext'
 
 export default function Profile() {
-    const {removeCookie, setRole} = useContext(UserContext)
+    const {removeCookie, setRole, role} = useContext(UserContext)
 
     return (
         <div className='profile'>
             <Header title='Your Profile' section='profile' />
             <button onClick={()=>removeCookie('scholla', setRole(null))}>Logout</button>
-            <Navbar />
+            <Navbar role={role} />
             </div>
       )
 }

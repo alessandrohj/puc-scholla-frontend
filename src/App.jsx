@@ -12,7 +12,9 @@ import NotFound from './pages/404';
 import Assignments from './pages/assignments/Assignments';
 import Profile from './pages/profile/Profile';
 import Users from './pages/users/Users';
+import Schools from './pages/schools/Schools';
 import Navbar from './components/navbar/Navbar';
+
 
 function App() {
   const [user, setUser] = useState(null)
@@ -31,12 +33,13 @@ function App() {
         <Route path='/assignment' element={<Protected isLoggedIn={cookies.scholla} component={<Assignments />} />} />
         <Route path='/profile' element={<Protected isLoggedIn={cookies.scholla} component={<Profile />} />} />
         <Route path='/users' element={<Protected isLoggedIn={cookies.scholla} component={<Users />} />} />
+        <Route path='/schools' element={<Protected isLoggedIn={cookies.scholla} component={<Schools />} />} />
         <Route path='*' element={NotFound} />
       </Routes>
-     {
-      role ?   <Navbar role={role}  /> : null
-     }
     </div>
+ {
+    role && <Navbar role={role} />
+ }
   </UserContext.Provider>
   )
 }
