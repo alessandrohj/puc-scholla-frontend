@@ -39,31 +39,26 @@ export default function Users() {
     switch (name) {
       case "firstName":
         if (validateField("name", value)) {
-          console.log("name is valid");
           setFirstName(value);
         }
         break;
       case "lastName":
         if (validateField("name", value)) {
-          console.log("last name is valid");
           setLastName(value);
         }
         break;
       case "email":
         if (validateField("email", value)) {
-          console.log("email is valid");
           setEmail(value);
         }
         break;
       case "password":
         if (validateField("password", value)) {
-          console.log("password is valid");
           setPassword(value);
         }
         break;
       case "confirmPassword":
         if (password === value) {
-          console.log("passwords match");
           setConfirmPassword(value);
         }
         break;
