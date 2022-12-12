@@ -1,3 +1,5 @@
+@import '../../components/global/styles/colors.scss';
+
 .details{
 
     &__container{
@@ -25,4 +27,37 @@
             }
         }
     }
+}
+
+.deleted-confirmation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p{
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+}
+
+button{
+    border-radius: 0.5rem;
+    background-color: $blue;
+    padding: 0.5rem 1rem;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.active{
+    background-color: $blue;
+}
+.disabled{
+    background-color: $aqua;
+    pointer-events: none;
 }

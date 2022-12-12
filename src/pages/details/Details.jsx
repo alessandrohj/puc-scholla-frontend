@@ -5,11 +5,14 @@ import "./details.scss";
 import UserContext from "../../components/scripts/UserContext";
 import Input from "../../components/global/input/Input";
 import Dropdown from "../../components/global/input/Dropdown";
+import ConfirmationModal from "../../components/global/confirmation/Confirmation";
 
 export default function Details() {
   const [isEditing, setIsEditing] = useState(false);
   const [details, setDetails] = useState({});
   const [updatedDetails, setUpdatedDetails] = useState({});
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const { email } = useParams();
   const { cookies } = useContext(UserContext);
   const navigate = useNavigate();
@@ -92,7 +95,8 @@ export default function Details() {
       })
       .then((data) => {
         setIsEditing(false);
-        navigate("/users");
+        setIsDeleted(true);
+        setShowConfirmation(false);
       })
       .catch((err) => console.log(err));
   };
@@ -102,7 +106,7 @@ export default function Details() {
       <Header title="Manage" section="newAssignment" />
       <div className="details__container">
         <div className="details__container__view">
-          {details && (
+          {details && !isDeleted && (
             <div className="details__container__view__info">
               <div className="details__container__view__info__details">
                 <h4>Name</h4>
@@ -175,7 +179,7 @@ export default function Details() {
           )}
         </div>
       </div>
-      <div className="details-buttons">
+      <div className="details-buttons" hidden={isDeleted}>
         {!isEditing ? (
           <button
             className="details-buttons__edit"
@@ -191,7 +195,10 @@ export default function Details() {
             Cancel
           </button>
         )}
-        <button onClick={handleDelete} className="details-buttons__delete">
+        <button
+          onClick={() => setShowConfirmation(true)}
+          className="details-buttons__delete"
+        >
           Delete
         </button>
         <button
@@ -202,6 +209,22 @@ export default function Details() {
           Save
         </button>
       </div>
+      {showConfirmation && (
+        <ConfirmationModal
+          name={details.firstName}
+          onConfirm={handleDelete}
+          onCancel={() => setShowConfirmation(false)}
+        />
+      )}
+      {isDeleted && (
+        <div className="deleted-confirmation">
+          <h2>Deleted</h2>
+          <p>
+            {details.firstName} {details.lastName} has been deleted
+          </p>
+          <button onClick={() => navigate("/users")}>Back to users</button>
+        </div>
+      )}
     </div>
   );
 }
