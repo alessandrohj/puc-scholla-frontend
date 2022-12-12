@@ -1,0 +1,28 @@
+.details{
+
+    &__container{
+
+        &__view{
+            &__info{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+
+                &__details{
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 1rem;
+                    min-width: 50%;
+
+                    &-edit{
+                        display: flex;
+                        gap: .5rem;
+                    }
+                }
+            }
+        }
+    }
+}
