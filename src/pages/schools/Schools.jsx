@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/global/header/Header";
 import Input from "../../components/global/input/Input";
 import "./schools.scss";
 
 export default function Schools() {
   const [addedSchool, setAddedSchool] = useState(false);
+  const [schoolList, setSchoolList] = useState([]);
+
+  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
+
+  function getSchoolList() {
+    const url = `${BASE_URL}/schools/list`;
+    fetch(url)
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then(({ data }) => {
+        console.log(data);
+        const schools = data.map((school) => {
+          return { value: school._id, label: school.name };
+        });
+        setSchoolList(schools);
+      })
+      .catch((err) => console.log(err));
+  }
 
   function handleSearch() {
     console.log("searching");
@@ -17,6 +36,16 @@ export default function Schools() {
   function addSchool() {
     setAddedSchool(true);
   }
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      getSchoolList();
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div className="schools">
@@ -32,10 +61,17 @@ export default function Schools() {
                 className="schools-container-list-header__search-input"
                 onChange={handleSearch}
               />
-              <div className="schools-container-list-header__search-content">
-                <p>List of schools</p>
-              </div>
             </div>
+          </div>
+          <div className="schools-container-list__search-content">
+            {schoolList &&
+              schoolList.map((school, index) => {
+                return (
+                  <h4 key={index} id={school.value}>
+                    {school.label}
+                  </h4>
+                );
+              })}
           </div>
           {!addedSchool ? (
             <div className="schools-add">
@@ -68,7 +104,7 @@ export default function Schools() {
               </div>
             </div>
           ) : (
-            <div className="schools-add">
+            <div className="schools-added">
               <h3>School Added</h3>
               <div className="schools-added__content">
                 <p>School has been added successfully.</p>
