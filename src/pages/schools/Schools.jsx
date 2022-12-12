@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../../components/global/header/Header";
 import Input from "../../components/global/input/Input";
+import UserContext from "../../components/scripts/UserContext";
 import "./schools.scss";
 
 export default function Schools() {
+  const { cookies } = useContext(UserContext);
   const [addedSchool, setAddedSchool] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [schoolList, setSchoolList] = useState([]);
+  const [deansList, setDeansList] = useState([]);
 
   const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
@@ -35,6 +39,50 @@ export default function Schools() {
 
   function addSchool() {
     setAddedSchool(true);
+  }
+
+  function findUser(name) {
+    const url = `${BASE_URL}/admin/users/role/dean/${name}`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then(({ data }) => {
+        console.log(data);
+        const deans = data.map((dean) => {
+          return {
+            value: dean._id,
+            firstName: dean.firstName,
+            lastName: dean.lastName,
+            label: `${dean.firstName} ${dean.lastName}`,
+          };
+        });
+        setDeansList(deans);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleGetDeans(ev) {
+    const name = ev.target.value;
+    if (name.length < 2) {
+      setSearchQuery("");
+      return;
+    }
+    setSearchQuery(name);
+
+    setTimeout(() => {
+      findUser(searchQuery);
+    }, 400);
+
+    // return () => {
+    //   clearTimeout();
+    // };
   }
 
   useEffect(() => {
@@ -86,14 +134,29 @@ export default function Schools() {
                     className={"schools-add-form-inputs__school-name"}
                     onChange={handleChange}
                   />
-                  <Input
-                    type="text"
-                    id={"deanName"}
-                    name={"deanName"}
-                    placeholder="Dean"
-                    className={"schools-add-form-inputs__dean"}
-                    onChange={handleChange}
-                  />
+                  <div className="schools-add-form-inputs__dean">
+                    <Input
+                      type="text"
+                      id={"deanName"}
+                      name={"deanName"}
+                      placeholder="Dean"
+                      onChange={handleGetDeans}
+                    />
+                    <div
+                      className="schools-add-form-inputs__dean-autocomplete"
+                      hidden={!deansList}
+                    >
+                      {deansList &&
+                        searchQuery &&
+                        deansList.map((dean, index) => {
+                          return (
+                            <p key={index} id={dean.value}>
+                              {dean.label}
+                            </p>
+                          );
+                        })}
+                    </div>
+                  </div>
                 </div>
                 <button
                   className="schools-add-form__add-button"
