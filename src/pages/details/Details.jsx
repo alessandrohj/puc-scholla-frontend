@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/global/header/Header";
 import "./details.scss";
 import UserContext from "../../components/scripts/UserContext";
@@ -12,6 +12,7 @@ export default function Details() {
   const [updatedDetails, setUpdatedDetails] = useState({});
   const { email } = useParams();
   const { cookies } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
@@ -73,6 +74,25 @@ export default function Details() {
       .then(({ data }) => {
         setDetails(data);
         setIsEditing(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleDelete = () => {
+    const url = `${BASE_URL}/admin/users/${email}`;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then((data) => {
+        setIsEditing(false);
+        navigate("/users");
       })
       .catch((err) => console.log(err));
   };
@@ -171,9 +191,11 @@ export default function Details() {
             Cancel
           </button>
         )}
-        <button className="details-buttons__delete">Delete</button>
+        <button onClick={handleDelete} className="details-buttons__delete">
+          Delete
+        </button>
         <button
-          className="details-buttons__delete"
+          className="details-buttons__save"
           hidden={!isEditing}
           onClick={handleSave}
         >
