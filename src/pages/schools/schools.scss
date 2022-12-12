@@ -1,7 +1,8 @@
 .schools{
 
 
-    &-add{
+    &-add,
+    &-added{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -20,5 +21,11 @@
                 gap: 1rem;
             }
         }
+    }
+    &-added__content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
