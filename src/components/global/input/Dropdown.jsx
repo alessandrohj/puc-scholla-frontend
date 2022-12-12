@@ -8,6 +8,7 @@ export default function Dropdown({
   name,
   label,
   noOption,
+  defaultValue,
 }) {
   const [selectedOption, setSelectedOption] = useState("");
   useState(() => {
@@ -26,6 +27,7 @@ export default function Dropdown({
           onChange(ev), setSelectedOption(ev.target.value);
         }}
         value={value}
+        defaultValue={defaultValue}
         className={options.length === 0 ? "hide-arrow" : ""}
       >
         <option value="" hidden={selectedOption ? true : false}>

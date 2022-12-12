@@ -4,10 +4,12 @@ import Header from "../../components/global/header/Header";
 import "./details.scss";
 import UserContext from "../../components/scripts/UserContext";
 import Input from "../../components/global/input/Input";
+import Dropdown from "../../components/global/input/Dropdown";
 
 export default function Details() {
   const [isEditing, setIsEditing] = useState(false);
-  const [details, setDetails] = useState([]);
+  const [details, setDetails] = useState({});
+  const [updatedDetails, setUpdatedDetails] = useState({});
   const { email } = useParams();
   const { cookies } = useContext(UserContext);
 
@@ -26,7 +28,6 @@ export default function Details() {
         if (res.ok) return res.json();
       })
       .then(({ data }) => {
-        console.log(data);
         setDetails(data);
       })
       .catch((err) => console.log(err));
@@ -43,17 +44,37 @@ export default function Details() {
     };
   }, []);
 
-  const toggleEdit = (value) => {
-    setIsEditing(value);
-  };
-
   const handleChange = (ev) => {
     const { name, value } = ev.target;
-    // setDetails((prev) => ({
-    //     ...prev,
-    //     [name]: value,
-    //     }));
-    console.log(name, value);
+
+    setUpdatedDetails({
+      ...details,
+      [name]: value,
+    });
+  };
+
+  const handleSave = () => {
+    const url = `${BASE_URL}/admin/users/${email}`;
+    if (details === updatedDetails) {
+      setIsEditing(false);
+      return;
+    }
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+      body: JSON.stringify(updatedDetails),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then(({ data }) => {
+        setDetails(data);
+        setIsEditing(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -119,15 +140,14 @@ export default function Details() {
                 {!isEditing ? (
                   <p>{details.role}</p>
                 ) : (
-                  <Input
-                    type={"text"}
-                    id={"role"}
-                    placeholder={"Role"}
-                    value={details.role}
+                  <Dropdown
+                    options={[
+                      { value: "admin", label: "Admin" },
+                      { value: "dean", label: "Dean" },
+                    ]}
+                    name="role"
+                    defaultValue={details.role}
                     onChange={handleChange}
-                    name={"role"}
-                    required={true}
-                    className={"input-field"}
                   />
                 )}
               </div>
@@ -152,7 +172,11 @@ export default function Details() {
           </button>
         )}
         <button className="details-buttons__delete">Delete</button>
-        <button className="details-buttons__delete" hidden={!isEditing}>
+        <button
+          className="details-buttons__delete"
+          hidden={!isEditing}
+          onClick={handleSave}
+        >
           Save
         </button>
       </div>
