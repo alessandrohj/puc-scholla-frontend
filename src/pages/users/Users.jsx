@@ -267,7 +267,12 @@ export default function Users() {
                   placeholder="Search by name or email"
                   onChange={(ev) => setSearchQuery(ev.target.value)}
                 />
-                <button onClick={findUser}>Search</button>
+                <button
+                  className={searchQuery.length === 0 ? "disabled" : "active"}
+                  onClick={findUser}
+                >
+                  Search
+                </button>
               </div>
               <div className="users-container-add-form-inputs__search-results">
                 <div className="users-container-add-form-inputs__search-results__user">
