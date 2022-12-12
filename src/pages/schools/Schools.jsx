@@ -7,9 +7,12 @@ import "./schools.scss";
 export default function Schools() {
   const { cookies } = useContext(UserContext);
   const [addedSchool, setAddedSchool] = useState(false);
+  const [schoolName, setSchoolName] = useState("");
+  const [closeAutoComplete, setCloseAutoComplete] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [schoolList, setSchoolList] = useState([]);
   const [deansList, setDeansList] = useState([]);
+  const [newDean, setNewDean] = useState("");
 
   const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
@@ -70,19 +73,26 @@ export default function Schools() {
 
   function handleGetDeans(ev) {
     const name = ev.target.value;
-    if (name.length < 2) {
-      setSearchQuery("");
+    setSearchQuery(name);
+    if (searchQuery.length < 2) {
       return;
     }
-    setSearchQuery(name);
+    setCloseAutoComplete(false);
 
     setTimeout(() => {
       findUser(searchQuery);
     }, 400);
 
-    // return () => {
-    //   clearTimeout();
-    // };
+    return () => {
+      clearTimeout();
+    };
+  }
+
+  function selectDean(ev) {
+    const dean = deansList.find((dean) => dean.value === ev.target.id);
+    setNewDean(dean);
+    setSearchQuery(`${dean.firstName} ${dean.lastName}`);
+    setCloseAutoComplete(true);
   }
 
   useEffect(() => {
@@ -131,6 +141,7 @@ export default function Schools() {
                     placeholder="School Name"
                     id={"schoolName"}
                     name={"schoolName"}
+                    value={schoolName}
                     className={"schools-add-form-inputs__school-name"}
                     onChange={handleChange}
                   />
@@ -139,18 +150,19 @@ export default function Schools() {
                       type="text"
                       id={"deanName"}
                       name={"deanName"}
+                      value={searchQuery}
                       placeholder="Dean"
                       onChange={handleGetDeans}
                     />
                     <div
                       className="schools-add-form-inputs__dean-autocomplete"
-                      hidden={!deansList}
+                      hidden={!deansList || !searchQuery || closeAutoComplete}
                     >
                       {deansList &&
                         searchQuery &&
                         deansList.map((dean, index) => {
                           return (
-                            <p key={index} id={dean.value}>
+                            <p key={index} id={dean.value} onClick={selectDean}>
                               {dean.label}
                             </p>
                           );
@@ -159,7 +171,11 @@ export default function Schools() {
                   </div>
                 </div>
                 <button
-                  className="schools-add-form__add-button"
+                  className={
+                    "schools-add-form__add-button" + !schoolName || !newDean
+                      ? " disabled"
+                      : "active"
+                  }
                   onClick={addSchool}
                 >
                   Add School
