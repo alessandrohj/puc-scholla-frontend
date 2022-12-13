@@ -94,7 +94,7 @@ export default function Schools() {
 
     setTimeout(() => {
       findUser(searchQuery);
-    }, 400);
+    }, 200);
 
     return () => {
       clearTimeout();
@@ -190,9 +190,8 @@ export default function Schools() {
                 </div>
                 <button
                   className={
-                    "schools-add-form__add-button" + !schoolName || !newDean
-                      ? " disabled"
-                      : "active"
+                    "schools-add-form__add-button" +
+                    (!schoolName || !newDean ? " disabled" : "active")
                   }
                   onClick={addSchool}
                 >
