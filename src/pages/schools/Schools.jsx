@@ -54,7 +54,26 @@ export default function Schools() {
   }
 
   function addSchool() {
-    setAddedSchool(true);
+    const url = `${BASE_URL}/admin/school`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+      body: JSON.stringify({
+        name: schoolName,
+        dean: newDean.value,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setAddedSchool(true);
+      })
+      .catch((err) => console.log(err));
   }
 
   function findUser(name) {
