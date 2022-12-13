@@ -10,7 +10,9 @@ export default function Schools() {
   const [schoolName, setSchoolName] = useState("");
   const [closeAutoComplete, setCloseAutoComplete] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [schoolQuery, setSchoolQuery] = useState("");
   const [schoolList, setSchoolList] = useState([]);
+  const [filteredSchoolList, setFilteredSchoolList] = useState([]);
   const [deansList, setDeansList] = useState([]);
   const [newDean, setNewDean] = useState("");
 
@@ -28,16 +30,27 @@ export default function Schools() {
           return { value: school._id, label: school.name };
         });
         setSchoolList(schools);
+        setFilteredSchoolList(schools);
       })
       .catch((err) => console.log(err));
   }
 
-  function handleSearch() {
-    console.log("searching");
-  }
-
-  function handleChange() {
-    console.log("changing");
+  function handleChange(ev) {
+    const { name, value } = ev.target;
+    if (name === "schoolName") {
+      setSchoolName(value);
+    } else if (name === "search") {
+      setSchoolQuery(value);
+      if (schoolQuery.trim() === "") {
+        setFilteredSchoolList(schoolList);
+        return;
+      } else {
+        const tempFilteredSchools = schoolList.filter((school) => {
+          return school.label.toLowerCase().includes(schoolQuery.toLowerCase());
+        });
+        setFilteredSchoolList(tempFilteredSchools);
+      }
+    }
   }
 
   function addSchool() {
@@ -116,20 +129,25 @@ export default function Schools() {
               <Input
                 type="text"
                 placeholder="Search"
+                name={"search"}
+                value={schoolQuery}
                 className="schools-container-list-header__search-input"
-                onChange={handleSearch}
+                onChange={handleChange}
               />
             </div>
           </div>
           <div className="schools-container-list__search-content">
-            {schoolList &&
-              schoolList.map((school, index) => {
+            {filteredSchoolList.length > 0 ? (
+              filteredSchoolList.map((school, index) => {
                 return (
                   <h4 key={index} id={school.value}>
                     {school.label}
                   </h4>
                 );
-              })}
+              })
+            ) : (
+              <h4>No results found</h4>
+            )}
           </div>
           {!addedSchool ? (
             <div className="schools-add">
