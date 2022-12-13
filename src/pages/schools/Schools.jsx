@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import Header from "../../components/global/header/Header";
 import Input from "../../components/global/input/Input";
 import UserContext from "../../components/scripts/UserContext";
@@ -70,8 +71,10 @@ export default function Schools() {
         if (res.ok) return res.json();
       })
       .then((data) => {
-        console.log(data);
         setAddedSchool(true);
+        setSchoolName("");
+        setNewDean("");
+        setSearchQuery("");
       })
       .catch((err) => console.log(err));
   }
@@ -156,17 +159,28 @@ export default function Schools() {
             </div>
           </div>
           <div className="schools-container-list__search-content">
-            {filteredSchoolList.length > 0 ? (
-              filteredSchoolList.map((school, index) => {
-                return (
-                  <h4 key={index} id={school.value}>
-                    {school.label}
-                  </h4>
-                );
-              })
-            ) : (
-              <h4>No results found</h4>
-            )}
+            <ul>
+              {filteredSchoolList.length > 0 ? (
+                filteredSchoolList.map((school, index) => {
+                  return (
+                    <li
+                      key={index}
+                      id={school.value}
+                      className="schools-container-list__search-content__item"
+                    >
+                      <Link
+                        className="schools-container-list__search-content__link"
+                        to={`/admin/school/${school.value}`}
+                      >
+                        {school.label}
+                      </Link>
+                    </li>
+                  );
+                })
+              ) : (
+                <li>No results found</li>
+              )}
+            </ul>
           </div>
           {!addedSchool ? (
             <div className="schools-add">

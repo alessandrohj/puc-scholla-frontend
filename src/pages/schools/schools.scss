@@ -1,27 +1,27 @@
 @import '../../components/global/styles/colors.scss';
 
-.schools{
-    &-add{
+.schools {
+    &-add {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
 
-        &-form{
+        &-form {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 2rem;
 
-            &-inputs{
+            &-inputs {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 gap: 1rem;
 
-                &__dean{
+                &__dean {
 
-                    &-autocomplete{
+                    &-autocomplete {
                         position: absolute;
                         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
                         width: 10rem;
@@ -48,41 +48,70 @@
             }
         }
     }
-    &-added__content{
+
+    &-added__content {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
-    &-container{
+    &-container {
         margin-top: 1rem;
 
-        &-list{
+        &-list {
 
-        &-header{
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            // flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        &__search{
-            &-content{
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                border: 1px solid black;
-                border-radius: 0.5rem;
-                padding-left: 1rem;
-                overflow: scroll;
-                max-height: 50vh;
-                min-height:  10vh;
-                margin-bottom: 5rem;
+            &-header {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                // flex-direction: column;
+                gap: 1rem;
+                margin-bottom: 1rem;
             }
-        }
 
+            &__search {
+                &-content {
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                    border: 1px solid black;
+                    border-radius: 0.5rem;
+                    overflow: scroll;
+                    max-height: 50vh;
+                    min-height: 10vh;
+                    margin-bottom: 5rem;
+
+                    ul {
+                        list-style: none;
+                        padding: .5rem 0;
+                        margin: 0;
+                    }
+
+                    &__item {
+                        cursor: pointer;
+                        padding: 0.5rem;
+                        font-size: 1.1rem;
+                        font-weight: 500;
+
+                        &:hover {
+                            background-color: $blue;
+                            border-radius: 1rem;
+                            // width: 100%;
+
+                        }
+                    }
+
+                    &__link {
+                        text-decoration: none;
+                        color: #000;
+
+                        &:hover {
+                            color: #fff;
+                        }
+
+                    }
+                }
+            }
+
+        }
     }
 }
-}
-
-
