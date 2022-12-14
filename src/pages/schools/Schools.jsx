@@ -170,7 +170,10 @@ export default function Schools() {
                     >
                       <Link
                         className="schools-container-list__search-content__link"
-                        to={`/admin/school/${school.value}`}
+                        to={{
+                          pathname: `/schools/${school.value}`,
+                          search: `?name=${school.label}`,
+                        }}
                       >
                         {school.label}
                       </Link>
