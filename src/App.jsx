@@ -15,6 +15,7 @@ import Users from "./pages/users/Users";
 import Schools from "./pages/schools/Schools";
 import Navbar from "./components/navbar/Navbar";
 import Details from "./pages/details/Details";
+import SchoolDetails from "./pages/schools/SchoolDetails";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -85,6 +86,15 @@ function App() {
             path="/schools"
             element={
               <Protected isLoggedIn={cookies.scholla} component={<Schools />} />
+            }
+          />
+          <Route
+            path="/schools/:id"
+            element={
+              <Protected
+                isLoggedIn={cookies.scholla}
+                component={<SchoolDetails />}
+              />
             }
           />
           <Route path="*" element={NotFound} />
