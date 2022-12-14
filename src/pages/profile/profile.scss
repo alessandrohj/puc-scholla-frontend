@@ -1,0 +1,35 @@
+.profile-details {
+    display: flex;
+    flex-direction: column;
+
+    &__name,
+    &__password {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+
+    }
+
+    &__email,
+    &__role,
+    &__school {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 3rem;
+    }
+
+    .inner-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+
+    }
+}
