@@ -59,13 +59,26 @@ export default function SchoolDetails() {
           };
         });
         setDeanOptions(options);
-        // console.log(data);
       })
       .catch((err) => console.log(err));
   }
 
   function handleDelete() {
-    console.log("delete");
+    const url = `${BASE_URL}/admin/school/${id}`;
+    fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   }
 
   function handleChange(ev) {
