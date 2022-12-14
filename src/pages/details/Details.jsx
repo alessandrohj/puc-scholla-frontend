@@ -217,12 +217,12 @@ export default function Details() {
         />
       )}
       {isDeleted && (
-        <div className="deleted-confirmation">
+        <div className="action-confirmation">
           <h2>Deleted</h2>
           <p>
             {details.firstName} {details.lastName} has been deleted
           </p>
-          <button onClick={() => navigate("/users")}>Back to users</button>
+          <button onClick={() => navigate("/users")}>Back to Users</button>
         </div>
       )}
     </div>
