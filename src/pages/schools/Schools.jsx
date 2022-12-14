@@ -26,7 +26,6 @@ export default function Schools() {
         if (res.ok) return res.json();
       })
       .then(({ data }) => {
-        console.log(data);
         const schools = data.map((school) => {
           return { value: school._id, label: school.name };
         });

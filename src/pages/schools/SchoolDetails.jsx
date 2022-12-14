@@ -3,21 +3,24 @@ import { useParams, useSearchParams } from "react-router-dom";
 import Header from "../../components/global/header/Header";
 import Dropdown from "../../components/global/input/Dropdown";
 import UserContext from "../../components/scripts/UserContext";
+import Input from "../../components/global/input/Input";
 import "./details.scss";
 
 export default function SchoolDetails() {
   const { cookies } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
+  const [schoolDetails, setSchoolDetails] = useState({});
   const [deanOptions, setDeanOptions] = useState([]);
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const [schoolName, setSchoolName] = useState(searchParams.get("name"));
-  const [dean, setDean] = useState(searchParams.get("dean"));
+  const [newDean, setNewDean] = useState("");
+  const [currentDean, setCurrentDean] = useState("");
 
   const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
   function getSchoolDetails() {
-    const url = `${BASE_URL}/schools/${id}`;
+    const url = `${BASE_URL}/schools/admin/${id}`;
     fetch(url, {
       method: "GET",
       headers: {
@@ -29,7 +32,34 @@ export default function SchoolDetails() {
         if (res.ok) return res.json();
       })
       .then(({ data }) => {
-        setSchoolName(data.name);
+        setSchoolDetails(data);
+        setCurrentDean(`${data.dean.firstName} ${data.dean.lastName}`);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function getDeanOptions() {
+    const url = `${BASE_URL}/admin/users/dean`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.scholla}`,
+      },
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+      })
+      .then(({ data }) => {
+        const options = data.map((dean) => {
+          return {
+            value: dean.id,
+            label: `${dean.firstName} ${dean.lastName}`,
+            email: dean.email,
+          };
+        });
+        setDeanOptions(options);
+        // console.log(data);
       })
       .catch((err) => console.log(err));
   }
@@ -38,8 +68,13 @@ export default function SchoolDetails() {
     console.log("delete");
   }
 
-  function handleChange() {
-    console.log("change");
+  function handleChange(ev) {
+    const { name, value } = ev.target;
+    if (name === "schoolName") {
+      setSchoolName(value);
+    } else if (name === "dean") {
+      setNewDean(value);
+    }
   }
   function handleSave() {
     console.log("save");
@@ -49,6 +84,7 @@ export default function SchoolDetails() {
     let isMounted = true;
     if (isMounted) {
       getSchoolDetails();
+      getDeanOptions();
     }
     return () => {
       isMounted = false;
@@ -58,46 +94,66 @@ export default function SchoolDetails() {
     <div className="school-details">
       <Header title={"Manage School"} section="newAssignment" />
 
-      <div className="school-details-container">
-        <div className="school-details-container-view">
-          <h4>School Name</h4>
-          {!isEditing ? (
-            <p>{schoolName}</p>
-          ) : (
-            <Input
-              type="text"
-              id="schoolName"
-              placeholder="School Name"
-              value={schoolName}
-              onChange={handleChange}
-              name="schoolName"
-              required={true}
-              className="input-field"
-            />
-          )}
-          <h4>Dean</h4>
-          {!isEditing ? (
-            <p>{dean}</p>
-          ) : (
-            <Dropdown
-              options={deanOptions}
-              placeholder="Select Dean"
-              onChange={handleChange}
-              name="dean"
-              value={dean}
-            />
-          )}
+      <div className="school-details__container">
+        <div className="school-details__container-view">
+          <div className="school-details__container-view-item">
+            <h4>School Name:</h4>
+            {!isEditing ? (
+              <p>{schoolName}</p>
+            ) : (
+              <Input
+                type="text"
+                id="schoolName"
+                placeholder="School Name"
+                value={schoolName}
+                onChange={handleChange}
+                name="schoolName"
+                required={true}
+                className="input-field"
+              />
+            )}
+          </div>
+          <div className="school-details__container-view-item">
+            <h4>Dean:</h4>
+            {!isEditing ? (
+              <p>{currentDean}</p>
+            ) : (
+              <Dropdown
+                options={deanOptions}
+                placeholder="Select Dean"
+                label={"Dean"}
+                onChange={handleChange}
+                name="dean"
+                hideLabelText={true}
+              />
+            )}
+          </div>
         </div>
         <div className="school-details-buttons">
           {!isEditing ? (
             <button onClick={() => setIsEditing(true)}>Edit</button>
           ) : (
             <div className="school-details-buttons-save-cancel">
-              <button onClick={() => setIsEditing(false)}>Cancel</button>
-              <button onClick={handleSave}>Save</button>
+              <button
+                className="school-details-buttons-cancel"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="school-details-buttons-save"
+                onClick={handleSave}
+              >
+                Save
+              </button>
             </div>
           )}
-          <button onClick={handleDelete}>Delete</button>
+          <button
+            className="school-details-buttons-delete"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>

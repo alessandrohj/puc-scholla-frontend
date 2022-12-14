@@ -9,6 +9,7 @@ export default function Dropdown({
   label,
   noOption,
   defaultValue,
+  hideLabelText,
 }) {
   const [selectedOption, setSelectedOption] = useState("");
   useState(() => {
@@ -19,7 +20,7 @@ export default function Dropdown({
 
   return (
     <div className="dropdown">
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>{hideLabelText ? "" : label}</label>
       <select
         name={name}
         id={name}

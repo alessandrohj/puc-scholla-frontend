@@ -1,0 +1,35 @@
+.school-details {
+    &__container {
+        &-view {
+            display: flex;
+            flex-direction: column;
+
+            &-item {
+                display: flex;
+                // justify-content: center;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    }
+
+    &-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+
+        &-delete {
+            background-color: red;
+        }
+
+        &-save {
+            background-color: green;
+        }
+
+        &-save-cancel {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+}
