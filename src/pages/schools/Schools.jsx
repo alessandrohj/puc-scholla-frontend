@@ -6,7 +6,7 @@ import UserContext from "../../components/scripts/UserContext";
 import "./schools.scss";
 
 export default function Schools() {
-  const { cookies } = useContext(UserContext);
+  const { cookies, BASE_URL } = useContext(UserContext);
   const [addedSchool, setAddedSchool] = useState(false);
   const [schoolName, setSchoolName] = useState("");
   const [closeAutoComplete, setCloseAutoComplete] = useState(false);
@@ -16,8 +16,6 @@ export default function Schools() {
   const [filteredSchoolList, setFilteredSchoolList] = useState([]);
   const [deansList, setDeansList] = useState([]);
   const [newDean, setNewDean] = useState("");
-
-  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
   function getSchoolList() {
     const url = `${BASE_URL}/schools/list`;

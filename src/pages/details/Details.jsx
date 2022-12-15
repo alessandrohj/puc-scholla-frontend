@@ -14,10 +14,8 @@ export default function Details() {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const { email } = useParams();
-  const { cookies } = useContext(UserContext);
+  const { cookies, BASE_URL } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
   const getUserDetails = () => {
     const url = `${BASE_URL}/admin/users/details/${email}`;

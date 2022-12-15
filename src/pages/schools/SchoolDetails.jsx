@@ -8,7 +8,7 @@ import ConfirmationModal from "../../components/global/confirmation/Confirmation
 import "./details.scss";
 
 export default function SchoolDetails() {
-  const { cookies } = useContext(UserContext);
+  const { cookies, BASE_URL } = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
   const [schoolDetails, setSchoolDetails] = useState({});
   const [deanOptions, setDeanOptions] = useState([]);
@@ -21,8 +21,6 @@ export default function SchoolDetails() {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const navigate = useNavigate();
-
-  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
   function getSchoolDetails() {
     const url = `${BASE_URL}/schools/admin/${id}`;

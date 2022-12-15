@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import IconExpand from "../../assets/icons/IconExpand";
 import Button from "../../components/global/button/Button";
 import "./signup.scss";
 import colors from "../../components/global/styles/variables.module.scss";
+import { UserContext } from "../../components/scripts/UserContext";
 
 export default function SignUp() {
   const [searchValue, setSearchValue] = useState("");
@@ -20,6 +21,7 @@ export default function SignUp() {
   const [isEverythingValid, setIsEverythingValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [schoolIdentifier, setSchoolIdentifier] = useState(null);
+  const { BASE_URL } = useContext(UserContext);
   const navigate = useNavigate();
 
   const roles = ["Student", "Teacher", "Parent"];
@@ -32,9 +34,6 @@ export default function SignUp() {
     transform: "rotate(0deg)",
     transition: "transform 0.5s ease-in-out",
   };
-
-  // const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
-  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
   const getSchoolList = () => {
     const url = BASE_URL + "/schools/" + searchValue;

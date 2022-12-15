@@ -5,7 +5,7 @@ import Input from "../../components/global/input/Input";
 import UserContext from "../../components/scripts/UserContext";
 
 export default function Profile() {
-  const { removeCookie, setRole, role, user, cookies } =
+  const { removeCookie, setRole, role, user, cookies, BASE_URL } =
     useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
   const [updatedDetails, setUpdatedDetails] = useState({});
@@ -13,7 +13,6 @@ export default function Profile() {
   const [userEmail, setUserEmail] = useState(user.email);
   const [userPassword, setUserPassword] = useState("");
   const [userConfirmPassword, setUserConfirmPassword] = useState("");
-  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
 
   function handleChange(ev) {
     const { name, value } = ev.target;

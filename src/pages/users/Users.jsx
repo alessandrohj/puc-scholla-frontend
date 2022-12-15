@@ -9,7 +9,7 @@ import UserContext from "../../components/scripts/UserContext";
 import "./users.scss";
 
 export default function Users() {
-  const { cookies } = useContext(UserContext);
+  const { cookies, BASE_URL } = useContext(UserContext);
   const [schools, setSchools] = useState([]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -24,7 +24,6 @@ export default function Users() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const BASE_URL = "http://localhost:3000"; //TODO: change to production url
   const getSchoolList = () => {
     fetch(`${BASE_URL}/schools/list`)
       .then((res) => {

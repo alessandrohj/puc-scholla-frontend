@@ -21,6 +21,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(["scholla"]);
+  const BASE_URL = "http://localhost:3000";
   const globalData = {
     user,
     setUser,
@@ -29,6 +30,7 @@ function App() {
     cookies,
     setCookie,
     removeCookie,
+    BASE_URL,
   };
 
   return (
