@@ -2,12 +2,14 @@ import React from "react";
 import { useContext, useEffect } from "react";
 import UserContext from "../../components/scripts/UserContext";
 import Header from "../../components/global/header/Header";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./home.scss";
 
 export default function Home() {
   const { setUser, user, cookies, removeCookie, setRole } =
     useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const getUserData = () => {
     // const url = "https://puc-scholla-backend-production.up.railway.app/auth/users/me";
@@ -23,12 +25,11 @@ export default function Home() {
       .then(({ data }) => {
         setUser(data);
         setRole(data.role);
-        console.log(data);
       })
       .catch((err) => {
         console.log(err);
         removeCookie("scholla");
-        Navigate("/");
+        navigate("/");
       });
   };
 

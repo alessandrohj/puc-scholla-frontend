@@ -4,7 +4,7 @@ import IconExpand from "../../assets/icons/IconExpand";
 import Button from "../../components/global/button/Button";
 import "./signup.scss";
 import colors from "../../components/global/styles/variables.module.scss";
-import { UserContext } from "../../components/scripts/UserContext";
+import UserContext from "../../components/scripts/UserContext";
 
 export default function SignUp() {
   const [searchValue, setSearchValue] = useState("");
