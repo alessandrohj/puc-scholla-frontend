@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./profile.scss";
 import Header from "../../components/global/header/Header";
 import Input from "../../components/global/input/Input";
@@ -13,6 +14,7 @@ export default function Profile() {
   const [userEmail, setUserEmail] = useState(user.email);
   const [userPassword, setUserPassword] = useState("");
   const [userConfirmPassword, setUserConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleChange(ev) {
     const { name, value } = ev.target;
@@ -161,6 +163,7 @@ export default function Profile() {
             onClick={() => {
               removeCookie("token");
               setRole("");
+              navigate("/");
             }}
           >
             Logout
