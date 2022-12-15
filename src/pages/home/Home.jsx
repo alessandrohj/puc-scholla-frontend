@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 import "./home.scss";
 
 export default function Home() {
-  const { setUser, user, cookies, removeCookie, setRole } =
+  const { setUser, user, cookies, removeCookie, setRole, BASE_URL } =
     useContext(UserContext);
 
   const navigate = useNavigate();
 
   const getUserData = () => {
-    // const url = "https://puc-scholla-backend-production.up.railway.app/auth/users/me";
-    const url = "http://localhost:3000/auth/users/me"; //TODO: change to production url
+    const url = BASE_URL + "/auth/users/me";
     fetch(url, {
       method: "GET",
       headers: {
