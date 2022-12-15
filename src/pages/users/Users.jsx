@@ -131,7 +131,8 @@ export default function Users() {
       email &&
       password &&
       confirmPassword &&
-      newUserRole
+      newUserRole &&
+      newUserSchool
     ) {
       setIsValid(true);
     } else {
