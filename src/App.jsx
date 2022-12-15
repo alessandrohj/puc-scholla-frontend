@@ -22,7 +22,8 @@ function App() {
   const [role, setRole] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(["scholla"]);
   // const BASE_URL = "http://localhost:3000";
-  const BASE_URL = "https://puc-scholla-backend-production.up.railway.app";
+  const BASE_URL =
+    "https://puc-scholla-backend-production-0f3f.up.railway.app/";
   const globalData = {
     user,
     setUser,
