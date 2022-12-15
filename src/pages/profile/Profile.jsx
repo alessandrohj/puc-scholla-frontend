@@ -161,7 +161,7 @@ export default function Profile() {
           )}
           <button
             onClick={() => {
-              removeCookie("token");
+              removeCookie("scholla");
               setRole("");
               navigate("/");
             }}
